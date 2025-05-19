@@ -8,12 +8,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\VendorController;
-use App\Http\Controllers\Admin\AdminDashboardController; // ✅ Tambahkan ini
+use App\Http\Controllers\Admin\AdminDashboardController;
 
 // Admin Unit Controllers
 use App\Http\Controllers\Unit\TransaksiController;
 use App\Http\Controllers\Unit\VendorKontakController;
-use App\Http\Controllers\Unit\UnitDashboardController; // (Jika nanti dibutuhkan)
+use App\Http\Controllers\Unit\PemesananController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,20 +22,15 @@ use App\Http\Controllers\Unit\UnitDashboardController; // (Jika nanti dibutuhkan
 */
 
 // ==========================
-// Landing Page
+// Landing Page Redirect
 // ==========================
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return redirect()->route('login');
+});
 
 // ==========================
 // Dashboard Redirect Based on Role
 // ==========================
-
-Route::get('/', function () {
-    return redirect()->route('login'); // atau 'dashboard'
-});
-
 Route::get('/dashboard', function () {
     if (Auth::check()) {
         if (Auth::user()->isSuperAdmin()) {
@@ -60,7 +55,7 @@ Route::middleware('auth')->group(function () {
 // SUPER ADMIN ROUTES
 // ==========================
 Route::middleware(['auth', 'role:super_admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard'); // ✅ Ganti ke controller
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('users', UserController::class);
     Route::resource('kategori', KategoriController::class);
@@ -77,9 +72,15 @@ Route::middleware(['auth', 'role:admin'])->prefix('unit')->name('unit.')->group(
 
     Route::get('vendor', [VendorKontakController::class, 'index'])->name('vendor.index');
     Route::get('transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+
+    // Pemesanan Vendor
+    Route::get('pemesanan', [PemesananController::class, 'index'])->name('pemesanan.index');
+    Route::get('pemesanan/create/{vendor}', [PemesananController::class, 'create'])->name('pemesanan.create');
+    Route::post('pemesanan/store/{vendor}', [PemesananController::class, 'store'])->name('pemesanan.store');
+    Route::post('pemesanan/kirim-email/{vendor}', [PemesananController::class, 'kirimEmail'])->name('pemesanan.kirimEmail');
 });
 
 // ==========================
-// Auth Routes
+// Auth Routes (Laravel Breeze / Jetstream / Fortify)
 // ==========================
 require __DIR__.'/auth.php';

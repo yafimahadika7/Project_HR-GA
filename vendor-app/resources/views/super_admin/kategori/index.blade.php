@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Manajemen User</title>
+    <title>Manajemen Kategori</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -104,7 +104,7 @@
     <!-- Topbar -->
     <div class="topbar" id="topbar">
         <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-        <span>Manajemen User</span>
+        <span>Manajemen Kategori</span>
     </div>
 
     <!-- Content -->

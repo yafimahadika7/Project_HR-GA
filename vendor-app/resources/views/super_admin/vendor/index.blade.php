@@ -104,9 +104,7 @@
     <!-- Topbar -->
     <div class="topbar" id="topbar">
         <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-        <div class="d-flex align-items-center justify-content-between w-100">
-            <span>Manajemen Vendor</span>
-        </div>
+        <span>Manajemen Vendor</span>
     </div>
 
     <!-- Content -->

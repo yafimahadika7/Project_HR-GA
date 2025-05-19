@@ -82,9 +82,12 @@
     </style>
 </head>
 <body>
-
+    <div class="topbar d-flex justify-content-between align-items-center" id="topbar">
+        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        <h4 class="mb-0">Dashboard {{ ucfirst(Auth::user()->bisnis_unit) }}</h4>
+    </div>
 <!-- Sidebar -->
-<div class="sidebar">
+<div class="sidebar" id="sidebar">
     <div class="text-center mb-3">
         <strong>{{ Auth::user()->name }}</strong><br>
         <small class="text-white">{{ ucfirst(Auth::user()->bisnis_unit) }}</small>
@@ -99,13 +102,10 @@
     </form>
 </div>
 
-<!-- Topbar -->
-<div class="topbar">
-    <h4>Dashboard Super Admin</h4>
-</div>
+
 
 <!-- Content -->
-<div class="content">
+<div class="content" id="main-content">
     <div class="row mb-4">
         <div class="col-md-3">
             <div class="card bg-primary text-white shadow">
@@ -154,6 +154,15 @@
 
 <!-- Chart JS -->
 <script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('main-content');
+        const topbar = document.getElementById('topbar');
+        sidebar.classList.toggle('hide');
+        content.classList.toggle('collapsed');
+        topbar.classList.toggle('collapsed');
+    }
+
     const ctx = document.getElementById('vendorChart').getContext('2d');
     const vendorChart = new Chart(ctx, {
         type: 'bar',
